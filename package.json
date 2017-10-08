@@ -17,8 +17,29 @@
   },
   "homepage": "https://github.com/sm5art/uw-rso-directory#readme",
   "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "body-parser": "^1.18.2",
     "cheerio": "^1.0.0-rc.2",
+    "cookie-parser": "^1.4.3",
+    "css-loader": "^0.28.7",
+    "ejs": "^2.5.7",
+    "express": "^4.16.1",
+    "file-loader": "^1.1.5",
+    "html": "^1.0.0",
+    "material-ui": "^0.19.3",
     "mongodb": "^2.2.31",
-    "request": "^2.83.0"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "react-tap-event-plugin": "^3.0.2",
+    "redux": "^3.7.2",
+    "request": "^2.83.0",
+    "style-loader": "^0.19.0",
+    "webpack": "^3.6.0"
   }
 }
