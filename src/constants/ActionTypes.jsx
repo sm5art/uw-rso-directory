@@ -1,1 +1,2 @@
-export const TODO = 'TODO';
+export const REQUEST_STARTED = 'REQUEST_STARTED';
+export const REQUEST_ENDED = 'REQUEST_ENDED';

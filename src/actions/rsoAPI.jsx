@@ -1,5 +1,16 @@
 import * as types from '../constants/ActionTypes';
+import { queryData } from '../api/queryData';
 
-export function Todo(text) {
-  return { type: types.TODO, text };
+
+
+export function  ajaxRSORequestFinished(data) {
+  return { type: types.REQUEST_STARTED, data }
+}
+
+export function ajaxRSORequest(query) {
+  return (dispatch) => {
+    queryData((rsoInfo) => {
+
+    })
+  };
 }
