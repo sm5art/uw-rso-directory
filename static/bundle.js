@@ -12094,46 +12094,9 @@ var MainSection = function (_Component) {
           actions = _props.actions;
 
       return _react2.default.createElement(
-        _semanticUiReact.Grid,
-        { columns: 3, divided: true },
-        _react2.default.createElement(
-          _semanticUiReact.Grid.Row,
-          null,
-          _react2.default.createElement(
-            _semanticUiReact.Grid.Column,
-            null,
-            _react2.default.createElement(_semanticUiReact.Rating, { maxRating: 5, clearable: true })
-          ),
-          _react2.default.createElement(
-            _semanticUiReact.Grid.Column,
-            null,
-            _react2.default.createElement(_semanticUiReact.Rating, { maxRating: 5, clearable: true })
-          ),
-          _react2.default.createElement(
-            _semanticUiReact.Grid.Column,
-            null,
-            _react2.default.createElement(_semanticUiReact.Rating, { maxRating: 5, clearable: true })
-          )
-        ),
-        _react2.default.createElement(
-          _semanticUiReact.Grid.Row,
-          null,
-          _react2.default.createElement(
-            _semanticUiReact.Grid.Column,
-            null,
-            _react2.default.createElement(_semanticUiReact.Rating, { maxRating: 5, clearable: true })
-          ),
-          _react2.default.createElement(
-            _semanticUiReact.Grid.Column,
-            null,
-            _react2.default.createElement(_semanticUiReact.Rating, { maxRating: 5, clearable: true })
-          ),
-          _react2.default.createElement(
-            _semanticUiReact.Grid.Column,
-            null,
-            _react2.default.createElement(_semanticUiReact.Rating, { maxRating: 5, clearable: true })
-          )
-        )
+        'span',
+        null,
+        'Hello World'
       );
     }
   }]);
@@ -23302,7 +23265,8 @@ var _rsoAPI = __webpack_require__(824);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var TODO = exports.TODO = 'TODO';
+var REQUEST_STARTED = exports.REQUEST_STARTED = 'REQUEST_STARTED';
+var REQUEST_ENDED = exports.REQUEST_ENDED = 'REQUEST_ENDED';
 
 /***/ }),
 /* 423 */
@@ -23333,11 +23297,11 @@ var _App = __webpack_require__(496);
 
 var _App2 = _interopRequireDefault(_App);
 
-var _Spice = __webpack_require__(825);
+var _Spice = __webpack_require__(826);
 
 var _Spice2 = _interopRequireDefault(_Spice);
 
-var _configureStore = __webpack_require__(826);
+var _configureStore = __webpack_require__(827);
 
 var _configureStore2 = _interopRequireDefault(_configureStore);
 
@@ -68379,20 +68343,48 @@ Feed.User = __WEBPACK_IMPORTED_MODULE_16__FeedUser__["a" /* default */];
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Todo = Todo;
+exports.ajaxRSORequestFinished = ajaxRSORequestFinished;
+exports.ajaxRSORequest = ajaxRSORequest;
 
 var _ActionTypes = __webpack_require__(422);
 
 var types = _interopRequireWildcard(_ActionTypes);
 
+var _queryData = __webpack_require__(825);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-function Todo(text) {
-  return { type: types.TODO, text: text };
+function ajaxRSORequestFinished(data) {
+  return { type: types.REQUEST_STARTED, data: data };
+}
+
+function ajaxRSORequest(query) {
+  return function (dispatch) {
+    (0, _queryData.queryData)(function (rsoInfo) {});
+  };
 }
 
 /***/ }),
 /* 825 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.queryData = queryData;
+function queryData(q) {
+  fetch('/api/getRsoData.json').then(function (response) {
+    response.json().then(function (data) {
+      console.log(data);
+    });
+  });
+}
+
+/***/ }),
+/* 826 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68476,7 +68468,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
 
 /***/ }),
-/* 826 */
+/* 827 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68489,28 +68481,53 @@ exports.default = configureStore;
 
 var _redux = __webpack_require__(73);
 
-var _reducers = __webpack_require__(827);
+var _reduxThunk = __webpack_require__(828);
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+var _reducers = __webpack_require__(829);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function configureStore(initialState) {
-  var store = (0, _redux.createStore)(_reducers2.default, initialState, window.devToolsExtension ? window.devToolsExtension() : undefined);
-
-  if (false) {
-    // Enable Webpack hot module replacement for reducers
-    module.hot.accept('../reducers', function () {
-      var nextReducer = require('../reducers');
-      store.replaceReducer(nextReducer);
-    });
-  }
+  var store = (0, _redux.createStore)(_reducers2.default, initialState, (0, _redux.applyMiddleWare)(_reduxThunk2.default));
 
   return store;
 }
 
 /***/ }),
-/* 827 */
+/* 828 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+function createThunkMiddleware(extraArgument) {
+  return function (_ref) {
+    var dispatch = _ref.dispatch,
+        getState = _ref.getState;
+    return function (next) {
+      return function (action) {
+        if (typeof action === 'function') {
+          return action(dispatch, getState, extraArgument);
+        }
+
+        return next(action);
+      };
+    };
+  };
+}
+
+var thunk = createThunkMiddleware();
+thunk.withExtraArgument = createThunkMiddleware;
+
+exports['default'] = thunk;
+
+/***/ }),
+/* 829 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68524,7 +68541,7 @@ var _redux = __webpack_require__(73);
 
 var _reactRouterRedux = __webpack_require__(239);
 
-var _todos = __webpack_require__(828);
+var _todos = __webpack_require__(830);
 
 var _todos2 = _interopRequireDefault(_todos);
 
@@ -68538,7 +68555,7 @@ var rootReducer = (0, _redux.combineReducers)({
 exports.default = rootReducer;
 
 /***/ }),
-/* 828 */
+/* 830 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

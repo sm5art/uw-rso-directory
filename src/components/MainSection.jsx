@@ -9,6 +9,7 @@ class MainSection extends Component {
   render() {
     const { state, actions } = this.props;
     return (
+      <span>Hello World</span>
     );
   }
 }
