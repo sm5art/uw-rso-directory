@@ -16,8 +16,7 @@ class App extends Component {
       <div>
         <MuiThemeProvider muiTheme={theme}>
           <div>
-            <MainSection state={state} actions={actions}/>
-            {this.props.children}
+            spice
           </div>
         </MuiThemeProvider>
       </div>

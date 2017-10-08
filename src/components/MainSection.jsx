@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters';
 import { AppBar } from 'material-ui';
 
 class MainSection extends Component {
@@ -9,7 +8,7 @@ class MainSection extends Component {
   }
 
   render() {
-    const { todos, actions } = this.props;
+    const { state, actions } = this.props;
     return (
       <AppBar title="Nice"></AppBar>
     );
