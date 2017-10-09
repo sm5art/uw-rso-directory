@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import MainSection from '../components/MainSection';
-import * as Actions from '../actions';
+import * as rsoAPI from '../actions/rsoAPI';
 
 class App extends Component {
   render() {
     const { state, actions } = this.props;
     return (
-      <MainSection/>
+      <MainSection state={state} actions={actions}/>
     );
   }
 }
@@ -21,7 +21,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Actions, dispatch)
+    actions: bindActionCreators({...rsoAPI}, dispatch)
   };
 }
 

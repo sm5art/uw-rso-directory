@@ -6,7 +6,6 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 
 import App from '../containers/App';
-import Spice from '../containers/Spice'
 import configureStore from '../store/configureStore';
 
 injectTapEventPlugin();
@@ -18,7 +17,6 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App} >
-        <Route path="spice" component={Spice}/>
       </Route>
     </Router>
   </Provider>,

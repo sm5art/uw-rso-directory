@@ -17,7 +17,7 @@ rsoModel = mongoose.model('rsoInformation', rsoInformation, 'rsoInformation');
 
 module.exports = {
   queryRsoInformation (cb) {
-    rsoModel.find().limit(10).exec((err, rsoInfo) => {
+    rsoModel.find().sort('name').limit(300).exec((err, rsoInfo) => {
       cb(rsoInfo);
     })
   }
