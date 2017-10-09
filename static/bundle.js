@@ -48703,14 +48703,20 @@ var MainSection = function (_Component) {
       }
       if (state.rsoAPI.loaded) {
         loadedComponent = _react2.default.createElement(
-          _semanticUiReact.Item.Group,
+          'div',
           null,
-          state.rsoAPI.data.map(ItemData)
+          _react2.default.createElement(_semanticUiReact.Search, null),
+          _react2.default.createElement(_semanticUiReact.Dropdown, { placeholder: 'Type of Club' }),
+          _react2.default.createElement(
+            _semanticUiReact.Item.Group,
+            null,
+            state.rsoAPI.data.map(ItemData)
+          )
         );
       }
 
       return _react2.default.createElement(
-        'div',
+        _semanticUiReact.Container,
         null,
         loadingComponent,
         loadedComponent

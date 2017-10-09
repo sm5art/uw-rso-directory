@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Item, Progress } from 'semantic-ui-react';
+import { Search, Container, Item, Progress, Dropdown } from 'semantic-ui-react';
 
 class MainSection extends Component {
   constructor(props, context) {
@@ -21,16 +21,19 @@ class MainSection extends Component {
     }
     if(state.rsoAPI.loaded){
       loadedComponent = (
-        <Item.Group>
-          {state.rsoAPI.data.map(ItemData)}
-        </Item.Group>);
+        <div>
+          <Search></Search>
+          <Dropdown placeholder="Type of Club"></Dropdown>
+          <Item.Group>
+            {state.rsoAPI.data.map(ItemData)}
+          </Item.Group></div>);
     }
 
     return (
-      <div>
+      <Container>
         {loadingComponent}
         {loadedComponent}
-      </div>
+      </Container>
     );
   }
 }
