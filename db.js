@@ -16,9 +16,15 @@ var rsoInformation = new Schema({
 rsoModel = mongoose.model('rsoInformation', rsoInformation, 'rsoInformation');
 
 module.exports = {
-  queryRsoInformation (cb) {
-    rsoModel.find().sort('name').limit(300).exec((err, rsoInfo) => {
+  queryRsoInformation (query, cb) {
+    rsoModel.find(query).sort('name').exec((err, rsoInfo) => {
       cb(rsoInfo);
+    })
+  },
+
+  queryRsoTypes (cb) {
+    rsoModel.distinct('type').exec((err, rsoTypes) => {
+      cb(rsoTypes)
     })
   }
 }

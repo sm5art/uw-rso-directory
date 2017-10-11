@@ -1,2 +1,4 @@
+export const TYPES_LOADED = 'TYPES_LOADED';
+
 export const REQUEST_STARTED = 'REQUEST_STARTED';
 export const REQUEST_ENDED = 'REQUEST_ENDED';

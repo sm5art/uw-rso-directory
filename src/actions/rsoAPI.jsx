@@ -1,5 +1,5 @@
 import * as types from '../constants/ActionTypes';
-import { queryData } from '../api/queryData';
+import { queryData, queryTypes } from '../api/queryData';
 
 
 export function  ajaxRSORequestFinished(data) {
@@ -13,9 +13,20 @@ export function ajaxRSORequestStarted() {
 export function ajaxRSORequest(query) {
   return (dispatch) => {
     dispatch(ajaxRSORequestStarted())
-    queryData((rsoInfo) => {
-      console.log(rsoInfo)
+    queryData(query, (rsoInfo) => {
       dispatch(ajaxRSORequestFinished(rsoInfo));
     })
   };
+}
+
+export function ajaxRSOTypeFinished(rsoTypes) {
+  return { type: types.TYPES_LOADED, data: rsoTypes }
+}
+
+export function ajaxRSOTypes() {
+  return (dispatch) => {
+    queryTypes((rsoTypes) => {
+      dispatch(ajaxRSOTypeFinished(rsoTypes));
+    })
+  }
 }

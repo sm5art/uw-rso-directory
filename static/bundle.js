@@ -23200,6 +23200,8 @@ StatisticValue.propTypes = process.env.NODE_ENV !== "production" ? {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var TYPES_LOADED = exports.TYPES_LOADED = 'TYPES_LOADED';
+
 var REQUEST_STARTED = exports.REQUEST_STARTED = 'REQUEST_STARTED';
 var REQUEST_ENDED = exports.REQUEST_ENDED = 'REQUEST_ENDED';
 
@@ -48681,13 +48683,27 @@ var MainSection = function (_Component) {
   function MainSection(props, context) {
     _classCallCheck(this, MainSection);
 
-    return _possibleConstructorReturn(this, (MainSection.__proto__ || Object.getPrototypeOf(MainSection)).call(this, props, context));
+    var _this = _possibleConstructorReturn(this, (MainSection.__proto__ || Object.getPrototypeOf(MainSection)).call(this, props, context));
+
+    _this.dropDownChange = _this.dropDownChange.bind(_this);
+    return _this;
   }
 
   _createClass(MainSection, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.props.actions.ajaxRSORequest();
+      this.props.actions.ajaxRSOTypes();
+      this.props.actions.ajaxRSORequest({});
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {}
+  }, {
+    key: 'dropDownChange',
+    value: function dropDownChange(event, data) {
+      if (data.value.length > 0) {
+        this.props.actions.ajaxRSORequest({ "type": data.value[0] });
+      }
     }
   }, {
     key: 'render',
@@ -48698,15 +48714,50 @@ var MainSection = function (_Component) {
 
       var loadedComponent = void 0;
       var loadingComponent = void 0;
+      var dropDown = void 0;
       if (state.rsoAPI.loading) {
         loadingComponent = _react2.default.createElement(_semanticUiReact.Progress, { percent: 100, indicating: true });
+      }
+      if (state.rsoAPI.types.length > 0) {
+        var options = [];
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = state.rsoAPI.types[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var type = _step.value;
+
+            var obj = {
+              key: type,
+              value: type,
+              text: type
+            };
+            options.push(obj);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        dropDown = _react2.default.createElement(_semanticUiReact.Dropdown, { placeholder: 'Type of Club', onChange: this.dropDownChange, fluid: true, multiple: true, selection: true, options: options });
       }
       if (state.rsoAPI.loaded) {
         loadedComponent = _react2.default.createElement(
           'div',
           null,
           _react2.default.createElement(_semanticUiReact.Search, null),
-          _react2.default.createElement(_semanticUiReact.Dropdown, { placeholder: 'Type of Club' }),
+          dropDown,
           _react2.default.createElement(
             _semanticUiReact.Item.Group,
             null,
@@ -68388,6 +68439,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.ajaxRSORequestFinished = ajaxRSORequestFinished;
 exports.ajaxRSORequestStarted = ajaxRSORequestStarted;
 exports.ajaxRSORequest = ajaxRSORequest;
+exports.ajaxRSOTypeFinished = ajaxRSOTypeFinished;
+exports.ajaxRSOTypes = ajaxRSOTypes;
 
 var _ActionTypes = __webpack_require__(420);
 
@@ -68408,9 +68461,20 @@ function ajaxRSORequestStarted() {
 function ajaxRSORequest(query) {
   return function (dispatch) {
     dispatch(ajaxRSORequestStarted());
-    (0, _queryData.queryData)(function (rsoInfo) {
-      console.log(rsoInfo);
+    (0, _queryData.queryData)(query, function (rsoInfo) {
       dispatch(ajaxRSORequestFinished(rsoInfo));
+    });
+  };
+}
+
+function ajaxRSOTypeFinished(rsoTypes) {
+  return { type: types.TYPES_LOADED, data: rsoTypes };
+}
+
+function ajaxRSOTypes() {
+  return function (dispatch) {
+    (0, _queryData.queryTypes)(function (rsoTypes) {
+      dispatch(ajaxRSOTypeFinished(rsoTypes));
     });
   };
 }
@@ -68426,8 +68490,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.queryData = queryData;
-function queryData(cb) {
-  fetch('/api/getRsoData.json').then(function (response) {
+exports.queryTypes = queryTypes;
+function queryData(query, cb) {
+  fetch('/api/getRsoData.json', { qs: query }).then(function (response) {
+    response.json().then(function (data) {
+      cb(data);
+    });
+  });
+}
+
+function queryTypes(cb) {
+  fetch('/api/getRsoTypes.json').then(function (response) {
     response.json().then(function (data) {
       cb(data);
     });
@@ -68538,6 +68611,7 @@ var _ActionTypes = __webpack_require__(420);
 
 var initialState = {
   data: [],
+  types: [],
   loaded: false,
   loading: false
 };
@@ -68551,6 +68625,8 @@ function todos() {
       return Object.assign({}, state, { loading: true });
     case _ActionTypes.REQUEST_ENDED:
       return Object.assign({}, state, { loading: false, loaded: true, data: action.data });
+    case _ActionTypes.TYPES_LOADED:
+      return Object.assign({}, state, { types: action.data });
     default:
       return Object.assign({}, state);
   }

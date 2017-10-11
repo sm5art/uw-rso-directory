@@ -16,8 +16,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.get('/api/getRsoData.json', function (req, res) {
-  db.queryRsoInformation((rsoInfo) => {
+  const query = req.query;
+  console.log(query);
+  db.queryRsoInformation(query, (rsoInfo) => {
     res.json(rsoInfo)
+  })
+});
+
+app.get('/api/getRsoTypes.json', function (req, res) {
+  db.queryRsoTypes((rsoTypes) => {
+    res.json(rsoTypes)
   })
 });
 
