@@ -17,7 +17,7 @@ class MainSection extends Component {
 
   dropDownChange(event, data) {
     if(data.value.length > 0){
-      this.props.actions.ajaxRSORequest({"type": data.value[0]});
+      this.props.actions.updateFilter({ types: data.value })
     }
   }
 
@@ -46,12 +46,24 @@ class MainSection extends Component {
       );
     }
     if(state.rsoAPI.loaded){
+      let data = state.rsoAPI.data;
+      const types = state.rsoAPI.filter.types;
+      if(types.length > 0) {
+        data = data.filter((point) => {
+          for(const type of types) {
+            if(point['type'] == type) {
+              return true;
+            }
+          }
+          return false;
+        })
+      }
       loadedComponent = (
         <div>
           <Search></Search>
           {dropDown}
           <Item.Group>
-            {state.rsoAPI.data.map(ItemData)}
+            {data.map(ItemData)}
           </Item.Group></div>);
     }
 

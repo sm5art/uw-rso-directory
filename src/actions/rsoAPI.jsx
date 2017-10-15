@@ -19,11 +19,15 @@ export function ajaxRSORequest(query) {
   };
 }
 
+export function updateFilter(filter) {
+  return { type: types.UPDATE_FILTER, data: filter}
+}
+
 export function ajaxRSOTypeFinished(rsoTypes) {
   return { type: types.TYPES_LOADED, data: rsoTypes }
 }
 
-export function ajaxRSOTypes() {
+  export function ajaxRSOTypes() {
   return (dispatch) => {
     queryTypes((rsoTypes) => {
       dispatch(ajaxRSOTypeFinished(rsoTypes));
