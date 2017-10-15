@@ -5,7 +5,7 @@ const initialState = {
   types: [],
   loaded: false,
   loading: false,
-  filter: { types: [] }
+  filter: { types: [], query: "" }
 };
 
 export default function todos(state = initialState, action) {

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Search, Container, Item, Progress, Dropdown } from 'semantic-ui-react';
+import { Input, Container, Item, Progress, Dropdown } from 'semantic-ui-react';
+import Fuse from 'fuse.js';
 
 class MainSection extends Component {
   constructor(props, context) {
     super(props, context);
     this.dropDownChange = this.dropDownChange.bind(this);
+    this.inputChange = this.inputChange.bind(this);
   }
 
   componentDidMount() {
@@ -16,9 +18,13 @@ class MainSection extends Component {
   }
 
   dropDownChange(event, data) {
-    if(data.value.length > 0){
+    if(data.value.length >= 0){
       this.props.actions.updateFilter({ types: data.value })
     }
+  }
+
+  inputChange(event, data) {
+    this.props.actions.updateFilter({ query: data.value })
   }
 
   render() {
@@ -39,7 +45,7 @@ class MainSection extends Component {
           value: type,
           text: type
         };
-        options.push(obj)
+        options.push(obj);
       }
       dropDown = (
         <Dropdown placeholder="Type of Club" onChange={this.dropDownChange} fluid multiple selection options={options}/>
@@ -58,9 +64,25 @@ class MainSection extends Component {
           return false;
         })
       }
+      if(state.rsoAPI.filter.query != "") {
+        var options = {
+          shouldSort: true,
+          threshold: 0.1,
+          location: 0,
+          distance: 50,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+          keys: [
+            "name",
+            "description"
+          ]
+        };
+        const fuse = new Fuse(data, options);
+        data = fuse.search(state.rsoAPI.filter.query);
+      }
       loadedComponent = (
         <div>
-          <Search></Search>
+          <Input placeholder="Search" onChange={this.inputChange}/>
           {dropDown}
           <Item.Group>
             {data.map(ItemData)}
