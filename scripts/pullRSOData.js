@@ -80,7 +80,8 @@ class Scraper {
           "type": rsoType,
           "id": rsoId,
           "contact": rsoContact,
-          "leaders": rsoLeaders
+          "leaders": rsoLeaders,
+          "href": rsoHref
         };
         rsoObjects.push(rsoObj);
         that.activeCount += 1;
