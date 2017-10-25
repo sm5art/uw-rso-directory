@@ -9,6 +9,7 @@ var rsoInformation = new Schema({
   "logo": String,
   "type": String,
   "id": String,
+  "href": String,
   "contact": String,
   "leaders": [{ "role": String, "name": String }]
 })
