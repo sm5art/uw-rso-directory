@@ -48861,7 +48861,15 @@ var ItemData = function ItemData(data) {
       _react2.default.createElement(
         _semanticUiReact.Item.Extra,
         null,
-        data.type
+        data.type,
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          _semanticUiReact.Label,
+          null,
+          _react2.default.createElement(_semanticUiReact.Icon, { name: 'mail' }),
+          ' ',
+          data.contact || "😢"
+        )
       )
     )
   );

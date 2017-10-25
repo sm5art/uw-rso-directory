@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Container, Item, Progress, Dropdown } from 'semantic-ui-react';
+import { Input, Container, Item, Progress, Dropdown, Icon, Label } from 'semantic-ui-react';
 import Fuse from 'fuse.js';
 
 class MainSection extends Component {
@@ -108,7 +108,13 @@ const ItemData = (data) => (
         <Item.Description>
           {data.description}
         </Item.Description>
-        <Item.Extra>{data.type}</Item.Extra>
+        <Item.Extra>
+          {data.type}
+          <br></br>
+            <Label>
+              <Icon name='mail' /> { data.contact || "😢" }
+            </Label>
+        </Item.Extra>
       </Item.Content>
     </Item>
 );
