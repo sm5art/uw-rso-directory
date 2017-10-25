@@ -103,7 +103,7 @@ const ItemData = (data) => (
       <Item.Image size='tiny' src={data.logo} />
 
       <Item.Content>
-        <Item.Header as='a'>{data.name}</Item.Header>
+        <Item.Header as="a" href={'https://uws-community.symplicity.com/index.php' + data.href } target="_blank">{data.name}</Item.Header>
         <Item.Meta>Description</Item.Meta>
         <Item.Description>
           {data.description}

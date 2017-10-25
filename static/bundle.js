@@ -48845,7 +48845,7 @@ var ItemData = function ItemData(data) {
       null,
       _react2.default.createElement(
         _semanticUiReact.Item.Header,
-        { as: 'a' },
+        { as: 'a', href: 'https://uws-community.symplicity.com/index.php' + data.href, target: '_blank' },
         data.name
       ),
       _react2.default.createElement(
