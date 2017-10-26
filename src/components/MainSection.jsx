@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Container, Item, Progress, Dropdown, Icon, Label } from 'semantic-ui-react';
+import { Input, Item, Progress, Dropdown, Icon, Label } from 'semantic-ui-react';
 import Fuse from 'fuse.js';
 
 class MainSection extends Component {
@@ -90,10 +90,10 @@ class MainSection extends Component {
     }
 
     return (
-      <Container>
+      <div>
         {loadingComponent}
         {loadedComponent}
-      </Container>
+      </div>
     );
   }
 }

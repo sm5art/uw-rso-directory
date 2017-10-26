@@ -48824,7 +48824,7 @@ var MainSection = function (_Component) {
       }
 
       return _react2.default.createElement(
-        _semanticUiReact.Container,
+        'div',
         null,
         loadingComponent,
         loadedComponent
