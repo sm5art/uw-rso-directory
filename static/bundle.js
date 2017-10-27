@@ -48813,6 +48813,15 @@ var MainSection = function (_Component) {
         loadedComponent = _react2.default.createElement(
           'div',
           null,
+          _react2.default.createElement(
+            'div',
+            { className: 'right' },
+            _react2.default.createElement(
+              'a',
+              { href: 'https://github.com/sm5art/uw-rso-directory' },
+              _react2.default.createElement(_semanticUiReact.Icon, { link: true, name: 'code', size: 'big' })
+            )
+          ),
           _react2.default.createElement(_semanticUiReact.Input, { placeholder: 'Search', onChange: this.inputChange }),
           dropDown,
           _react2.default.createElement(

@@ -82,6 +82,7 @@ class MainSection extends Component {
       }
       loadedComponent = (
         <div>
+          <div className="right"><a href="https://github.com/sm5art/uw-rso-directory"><Icon link name="code" size="big"/></a></div>
           <Input placeholder="Search" onChange={this.inputChange}/>
           {dropDown}
           <Item.Group>
