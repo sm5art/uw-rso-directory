@@ -7,6 +7,7 @@ class MainSection extends Component {
     super(props, context);
     this.dropDownChange = this.dropDownChange.bind(this);
     this.inputChange = this.inputChange.bind(this);
+    this.lastQuery = "";
   }
 
   componentDidMount() {
@@ -64,12 +65,12 @@ class MainSection extends Component {
           return false;
         })
       }
-      if(state.rsoAPI.filter.query != "") {
+      if(state.rsoAPI.filter.query != "" && state.rsoAPI.filter.query != this.lastQuery) {
         var options = {
           shouldSort: true,
-          threshold: 0.1,
+          threshold: 0.5,
           location: 0,
-          distance: 50,
+          distance: 100,
           maxPatternLength: 32,
           minMatchCharLength: 1,
           keys: [
@@ -79,6 +80,8 @@ class MainSection extends Component {
         };
         const fuse = new Fuse(data, options);
         data = fuse.search(state.rsoAPI.filter.query);
+        this.everyOther = false;
+        console.log('searching');
       }
       loadedComponent = (
         <div>

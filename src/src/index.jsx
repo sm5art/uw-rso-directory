@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import injectTapEventPlugin from "react-tap-event-plugin";
 import { Router, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
@@ -8,7 +7,6 @@ import { Provider } from 'react-redux';
 import App from '../containers/App';
 import configureStore from '../store/configureStore';
 
-injectTapEventPlugin();
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
